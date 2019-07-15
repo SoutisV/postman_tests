@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postman_tests:
+    build: .
+    image: postman_tests
+    network_mode: host
+    command:
+        run restful_api_tests.json
+        -r html,cli
+        --reporter-html-export reports/restful_api_tests_run.html
+    volumes:
+      - ./src:/etc/newman

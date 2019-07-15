@@ -1,0 +1,829 @@
+{
+	"info": {
+		"_postman_id": "bc5edae5-d9e3-4d84-a04f-265d190245c0",
+		"name": "RestAPI test Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "list of all nodes available on db",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f0b5d36-1dd2-4d9b-9e99-55d9caa2be86",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/nodes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"nodes"
+					]
+				},
+				"description": "GET request to list all available nodes in db"
+			},
+			"response": []
+		},
+		{
+			"name": "List children of node 8",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e38b39e-4853-4675-91db-8bb4a39f20bc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Data array is empty\", function () {",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/children/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"children",
+						"8"
+					]
+				},
+				"description": "Node 8 has no children because it is a leave"
+			},
+			"response": []
+		},
+		{
+			"name": "List info of node 9",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d9b4cce-5897-48d4-8419-e42cfb194bb4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"id is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].id).to.equal(9);",
+							"});",
+							"pm.test(\"root is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].parent).to.equal(7);",
+							"});",
+							"pm.test(\"height is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].height).to.equal(3);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/node/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"node",
+						"9"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "List info of node 9",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/node/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"node",
+								"9"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29-HXaMk08de901v2/6vEhf87VNUBE\""
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 14 Jul 2019 15:46:02 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 9,\n        \"root\": 1,\n        \"parent\": 7,\n        \"height\": 3\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "List descendants of node 7",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00314261-c956-466b-9740-eef00394002f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//id 7",
+							"pm.test(\"id(7) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].id).to.equal(7);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(3) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].parent).to.equal(3);",
+							"});",
+							"pm.test(\"height(2) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].height).to.equal(2);",
+							"});",
+							"//id 9",
+							"pm.test(\"id(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].id).to.equal(9);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(7) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].parent).to.equal(7);",
+							"});",
+							"pm.test(\"height(3) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].height).to.equal(3);",
+							"});",
+							"//id 10",
+							"pm.test(\"id(10) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].id).to.equal(10);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(4) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].height).to.equal(4);",
+							"});",
+							"//id 11",
+							"pm.test(\"id(11) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].id).to.equal(11);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(4) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].height).to.equal(4);",
+							"});",
+							"//id 12",
+							"pm.test(\"id(12) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].id).to.equal(11);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(4) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].height).to.equal(4);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/descendants/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"descendants",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT(update) node 7 with new parent 8",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a58bc0ca-21b4-4907-a12a-1d3638ba8ca4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "new_parent",
+							"value": "8",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/nodes/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"nodes",
+						"7"
+					]
+				},
+				"description": "Node 7 together with all it's children will be updated and moved under node 8"
+			},
+			"response": []
+		},
+		{
+			"name": "List children of node 8",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d8918ca2-fbf7-473f-83c8-5bbf0defa4d4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//id 7",
+							"pm.test(\"id(7) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].id).to.equal(7);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(8) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].parent).to.equal(8);",
+							"});",
+							"pm.test(\"height(4) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].height).to.equal(4);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/children/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"children",
+						"8"
+					]
+				},
+				"description": "Before there were no children under node 8.\nAfter the update there is now node 7 as a child!!"
+			},
+			"response": []
+		},
+		{
+			"name": "List descendants of node 7 after the update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a5f4a5d1-6f84-4a80-9185-356256ac7aa9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//id 7",
+							"pm.test(\"id(7) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].id).to.equal(7);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(8) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].parent).to.equal(8);",
+							"});",
+							"pm.test(\"height(4) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].height).to.equal(4);",
+							"});",
+							"//id 9",
+							"pm.test(\"id(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].id).to.equal(9);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(7) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].parent).to.equal(7);",
+							"});",
+							"pm.test(\"height(5) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[1].height).to.equal(5);",
+							"});",
+							"//id 10",
+							"pm.test(\"id(10) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].id).to.equal(10);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(6) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[2].height).to.equal(6);",
+							"});",
+							"//id 11",
+							"pm.test(\"id(11) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].id).to.equal(11);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(6) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].height).to.equal(6);",
+							"});",
+							"//id 12",
+							"pm.test(\"id(12) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].id).to.equal(11);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(6) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[3].height).to.equal(6);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/descendants/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"descendants",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST(insert) a new node 13 under node 9",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be88b333-bcb9-4000-aec8-46d6c4aadf18",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "new_node",
+							"value": "13",
+							"type": "text"
+						},
+						{
+							"key": "new_parent",
+							"value": "9",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/nodes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"nodes"
+					]
+				},
+				"description": "New node 13 is inserted under node 9"
+			},
+			"response": []
+		},
+		{
+			"name": "List info for new added node 13",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7a84ee7e-a62a-4716-9e04-31df2a7bf87f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//id 13",
+							"pm.test(\"id(13) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].id).to.equal(13);",
+							"});",
+							"pm.test(\"root(1) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].root).to.equal(1);",
+							"});",
+							"pm.test(\"parent(9) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].parent).to.equal(9);",
+							"});",
+							"pm.test(\"height(6) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].height).to.equal(6);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/node/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"node",
+						"13"
+					]
+				},
+				"description": "Node 13 has parent node 9 and height 6"
+			},
+			"response": []
+		},
+		{
+			"name": "POST(insert) new root node 55",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51f09f03-a90a-4cb0-b256-f0db5ff5b950",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "new_node",
+							"value": "55",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/nodes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"nodes"
+					]
+				},
+				"description": "New root node is inserted as we dont specify new_parent "
+			},
+			"response": []
+		},
+		{
+			"name": "List info of new root node 55",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a515d2c-5a34-40d2-80a9-89f1476890d7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//id 55",
+							"pm.test(\"id(55) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].id).to.equal(55);",
+							"});",
+							"pm.test(\"root(55) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].root).to.equal(55);",
+							"});",
+							"pm.test(\"parent(null) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].parent).to.equal(null);",
+							"});",
+							"pm.test(\"height(0) is correct\", function () {",
+							"    var body = JSON.parse(responseBody);",
+							"  ",
+							"    pm.expect(body[0].height).to.equal(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/node/55",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"node",
+						"55"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
