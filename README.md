@@ -88,7 +88,7 @@ The default output if you're using `newman` locally or using the Docker Image, i
 
 ## Collection Run HTML Reports
 
-The reason I'm not using the Official Image is to get a custom HTML report from the collection run - For this I'm using the `newman-html-reporter` module, in order to tell `newman` to use this I've added a couple of arguments to the `command` property in the `docker-compose.yml` file. First, we need to tell it we want to use an additional reporter, this is done using the `-r cli,html` flag. This alone would be enough to create the report and save the to the root directory but I wanted it to be placed in a particular directory. For this I've used the `--reporter-html-export` flag and then specified a filename and a location `reports/Restful_Booker_Test_Run.html`.
+The reason I'm not using the Official Image is to get a custom HTML report from the collection run - For this I'm using the `newman-html-reporter` module, in order to tell `newman` to use this I've added a couple of arguments to the `command` property in the `docker-compose.yml` file. First, we need to tell it we want to use an additional reporter, this is done using the `-r cli,html` flag. This alone would be enough to create the report and save the to the root directory but I wanted it to be placed in a particular directory. For this I've used the `--reporter-html-export` flag and then specified a filename and a location `reports/restful_api_tests_run.html`.
 
 After the run, the new HTML report is added to the `.src/reports` directory.
 
